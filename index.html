@@ -115,18 +115,19 @@
 
     /* 🎉 Celebration overlay */
     #celebration {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
-      z-index: 999;
-      animation: fadeIn 1.5s ease forwards;
-    }
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  z-index: 999;
+  opacity: 0; /* keep hidden */
+  pointer-events: none; /* prevent accidental clicks when hidden */
+}
 
     #celebration h1 {
       font-size: 32px;
@@ -213,9 +214,12 @@ function startHearts() {
 const video = document.getElementById("loveVideo");
 
 video.addEventListener("ended", () => {
-  const celebration = document.getElementById("celebration");
-  celebration.classList.remove("hidden"); // show overlay
-
+const celebration = document.getElementById("celebration");
+celebration.classList.remove("hidden"); // show overlay
+celebration.style.transition = "opacity 1.5s ease";
+celebration.style.opacity = "1";
+     // trigger fade in
+celebration.style.pointerEvents = "auto";
   // Add extra floating hearts + butterflies for celebration
   for (let i = 0; i < 15; i++) {
     createEmoji("❤️", "heart");
@@ -284,6 +288,7 @@ function createEmoji(symbol, className) {
 
 </body>
 </html>
+
 
 
 
