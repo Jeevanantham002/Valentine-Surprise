@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine Surprise 💖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.15);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      max-width: 400px;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    #noBtn {
+      background: #fff;
+      color: #ff4f81;
+    }
+
+    #yesBtn {
+      background: #ff4f81;
+      color: #fff;
+      position: relative;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* HEART ANIMATION */
+    .heart {
+      position: absolute;
+      bottom: 0;
+      font-size: 20px;
+      animation: floatUp 4s linear infinite;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    video {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- QUESTION -->
+  <div class="card" id="questionCard">
+    <h1>Hey Gundus will you be my Valentine? 💖</h1>
+    <div class="buttons">
+      <button id="yesBtn" onclick="sayYes()">YES 💘</button>
+      <button id="noBtn" onmouseover="moveNo()">NO 🙈</button>
+    </div>
+  </div>
+
+  <!-- YES RESULT -->
+  <div class="card hidden" id="yesCard">
+    <h1>You said YES 🥹💖</h1>
+    <p>This song is just for you.</p>
+
+    <!-- Replace with your video -->
+    <video controls autoplay>
+      <source src="love.mp4" type="video/mp4">
+    </video>
+
+    <p style="margin-top:10px;">— Built with ❤️ by your developer</p>
+  </div>
+
+  <script>
+    let heartInterval;
+
+    function sayYes() {
+      document.getElementById("questionCard").classList.add("hidden");
+      document.getElementById("yesCard").classList.remove("hidden");
+      startHearts();
+    }
+
+    function moveNo() {
+      const noBtn = document.getElementById("noBtn");
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function startHearts() {
+      heartInterval = setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 15 + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
