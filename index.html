@@ -125,10 +125,10 @@
     <video controls autoplay>
       <source src="love.mp4" type="video/mp4">
     </video> -->
-    <video controls autoplay muted playsinline>
+    <video id="loveVideo" controls muted playsinline>
   <source src="love.mp4" type="video/mp4">
-  Your browser does not support the video.
 </video>
+
 
 
     <p style="margin-top:10px;">— Built with ❤️ by your developer</p>
@@ -137,11 +137,21 @@
   <script>
     let heartInterval;
 
-    function sayYes() {
+    /*function sayYes() {
       document.getElementById("questionCard").classList.add("hidden");
       document.getElementById("yesCard").classList.remove("hidden");
       startHearts();
-    }
+    }*/
+
+function sayYes() {
+  document.getElementById("questionCard").classList.add("hidden");
+  document.getElementById("yesCard").classList.remove("hidden");
+  startHearts();
+  const video = document.getElementById("loveVideo");
+  video.muted = false;   // turn sound ON
+  video.play();          // play after user action (allowed!)
+}
+
 
     function moveNo() {
       const noBtn = document.getElementById("noBtn");
@@ -169,4 +179,5 @@
 
 </body>
 </html>
+
 
