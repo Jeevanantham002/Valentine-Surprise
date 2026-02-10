@@ -93,19 +93,23 @@
       to { transform: translateY(-10vh); opacity: 0; }
     }
 
-    /* 🦋 Butterflies */
-    .butterfly {
-      position: fixed;
-      font-size: 22px;
-      animation: flutter 6s ease-in-out infinite;
-      z-index: 1;
-    }
+    /* 🦋 Butterflies flying randomly */
+.butterfly {
+  position: fixed;
+  font-size: 22px;
+  z-index: 1;
+  pointer-events: none;
+  animation: flutter linear infinite;
+}
 
-    @keyframes flutter {
-      0% { transform: translate(0, 100vh); }
-      50% { transform: translate(40px, 50vh); }
-      100% { transform: translate(-40px, -10vh); }
-    }
+@keyframes flutter {
+  0% { transform: translate(var(--start-x), var(--start-y)) rotate(0deg); }
+  25% { transform: translate(var(--mid1-x), var(--mid1-y)) rotate(45deg); }
+  50% { transform: translate(var(--mid2-x), var(--mid2-y)) rotate(-20deg); }
+  75% { transform: translate(var(--mid3-x), var(--mid3-y)) rotate(30deg); }
+  100% { transform: translate(var(--end-x), var(--end-y)) rotate(0deg); }
+}
+
 
     video {
       width: 100%;
@@ -222,24 +226,48 @@
       celebration.classList.add("show"); // fade-in overlay
 
       // Add extra floating hearts + butterflies for celebration
-      for (let i = 0; i < 15; i++) {
-        createEmoji("❤️", "heart");
-        createEmoji("🦋", "butterfly");
-      }
-    });
+    for (let i = 0; i < 25; i++) {
+      createEmoji("❤️", "heart");
+      createEmoji("🦋", "butterfly");
+    }
+    let butterflyCount = 0;
+const butterflyInterval = setInterval(() => {
+  createEmoji("🦋", "butterfly");
+  butterflyCount++;
+  if (butterflyCount > 50) clearInterval(butterflyInterval);
+}, 200);
+  });
 
     function createEmoji(symbol, className) {
-      const el = document.createElement("div");
-      el.innerText = symbol;
-      el.className = className;
-      el.style.left = Math.random() * 100 + "vw";
-      el.style.animationDelay = Math.random() * 3 + "s";
-      document.body.appendChild(el);
+  const el = document.createElement("div");
+  el.innerText = symbol;
+  el.className = className;
 
-      setTimeout(() => el.remove(), 6000);
-    }
+  if (className === "butterfly") {
+    // Random positions for the flutter animation
+    el.style.setProperty('--start-x', Math.random() * 100 + 'vw');
+    el.style.setProperty('--start-y', 100 + 'vh'); // start from bottom
+    el.style.setProperty('--mid1-x', Math.random() * 100 + 'vw');
+    el.style.setProperty('--mid1-y', Math.random() * 80 + 'vh');
+    el.style.setProperty('--mid2-x', Math.random() * 100 + 'vw');
+    el.style.setProperty('--mid2-y', Math.random() * 80 + 'vh');
+    el.style.setProperty('--mid3-x', Math.random() * 100 + 'vw');
+    el.style.setProperty('--mid3-y', Math.random() * 80 + 'vh');
+    el.style.setProperty('--end-x', Math.random() * 100 + 'vw');
+    el.style.setProperty('--end-y', -10 + 'vh'); // end above the screen
+
+    // Random animation duration for each butterfly
+    el.style.animationDuration = (4 + Math.random() * 3) + 's';
+  }
+
+  document.body.appendChild(el);
+
+  setTimeout(() => el.remove(), 6000);
+}
+
   </script>
 
 </body>
 </html>
+
 
