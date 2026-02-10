@@ -121,13 +121,11 @@
     <h1>You said "YES" baby girl😉💞, smart choice di ✨</h1>
     <p>This part was made especially for you 🥹✨</p>
 
-    <!-- Replace with your video
-    <video controls autoplay>
-      <source src="love.mp4" type="video/mp4">
-    </video> -->
-    <video id="loveVideo" controls muted playsinline>
+    <!-- Replace with your video -->
+    <video id="loveVideo" controls preload="auto" playsinline>
   <source src="love.mp4" type="video/mp4">
 </video>
+
 
 
 
@@ -147,9 +145,16 @@ function sayYes() {
   document.getElementById("questionCard").classList.add("hidden");
   document.getElementById("yesCard").classList.remove("hidden");
   startHearts();
+
   const video = document.getElementById("loveVideo");
-  video.muted = false;   // turn sound ON
-  video.play();          // play after user action (allowed!)
+
+  // give browser a tiny moment to render the video
+  setTimeout(() => {
+    video.muted = false;
+    video.play().catch(err => {
+      console.log("Autoplay blocked, user must press play", err);
+    });
+  }, 300);
 }
 
 
@@ -179,5 +184,6 @@ function sayYes() {
 
 </body>
 </html>
+
 
 
