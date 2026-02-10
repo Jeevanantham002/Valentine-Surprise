@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Valentine Surprise 💖</title>
+
   <style>
     * {
       margin: 0;
@@ -28,7 +29,7 @@
       border-radius: 20px;
       backdrop-filter: blur(10px);
       box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-      max-width: 500px;
+      max-width: 700px;
       position: relative;
       z-index: 2;
     }
@@ -40,6 +41,7 @@
 
     p {
       margin-bottom: 15px;
+      font-size: 1.05rem;
     }
 
     .buttons {
@@ -58,15 +60,14 @@
       transition: 0.2s;
     }
 
-    #noBtn {
-      background: #fff;
-      color: #ff4f81;
-    }
-
     #yesBtn {
       background: #ff4f81;
       color: #fff;
-      position: relative;
+    }
+
+    #noBtn {
+      background: #fff;
+      color: #ff4f81;
     }
 
     button:hover {
@@ -77,25 +78,33 @@
       display: none;
     }
 
-    /* HEART ANIMATION */
+    /* ❤️ Hearts floating */
     .heart {
-      position: absolute;
+      position: fixed;
       bottom: 0;
-      font-size: 20px;
-      animation: floatUp 4s linear infinite;
+      font-size: 22px;
+      animation: floatUp 5s linear infinite;
       opacity: 0.8;
       z-index: 1;
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) scale(1.5);
-        opacity: 0;
-      }
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
+    }
+
+    /* 🦋 Butterflies */
+    .butterfly {
+      position: fixed;
+      font-size: 22px;
+      animation: flutter 6s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes flutter {
+      0% { transform: translate(0, 100vh); }
+      50% { transform: translate(40px, 50vh); }
+      100% { transform: translate(-40px, -10vh); }
     }
 
     video {
@@ -103,56 +112,88 @@
       border-radius: 15px;
       margin-top: 15px;
     }
+
+    /* 🎉 Celebration overlay */
+    #celebration {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      z-index: 999;
+      opacity: 0; /* hidden initially */
+      pointer-events: none;
+    }
+
+    #celebration.show {
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 1.5s ease;
+    }
+
+    #celebration h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    #celebration p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- QUESTION -->
+  <!-- QUESTION CARD -->
   <div class="card" id="questionCard">
-    <h1>Hey Gundus will you be my Valentine? 💖</h1>
+    <h1>Hey Gundus 💖<br>Will you be my Valentine?</h1>
     <div class="buttons">
       <button id="yesBtn" onclick="sayYes()">YES 💖</button>
       <button id="noBtn" onmouseover="moveNo()">NO 😐</button>
     </div>
   </div>
 
-  <!-- YES RESULT -->
+  <!-- YES CARD -->
   <div class="card hidden" id="yesCard">
-    <h1>You said "YES" baby girl😉💞, smart choice di ✨</h1>
+    <h1>You said YES baby girl 😉💞</h1>
     <p>This part was made especially for you 🥹✨</p>
 
-    <!-- Replace with your video -->
     <video id="loveVideo" controls preload="auto" playsinline>
-  <source src="love.mp4" type="video/mp4">
-</video>
+      <source src="love.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+  </div>
 
+  <!-- 🎉 Celebration -->
+  <div id="celebration">
+    <h1>Happy Valentine’s Day 💖</h1>
+    <p>You just made this day extra special 🦋</p>
   </div>
 
   <script>
     let heartInterval;
 
-    /*function sayYes() {
+    function sayYes() {
       document.getElementById("questionCard").classList.add("hidden");
       document.getElementById("yesCard").classList.remove("hidden");
+
+      const video = document.getElementById("loveVideo");
+
+      // Start floating hearts during YES card
       startHearts();
-    }*/
 
-function sayYes() {
-  document.getElementById("questionCard").classList.add("hidden");
-  document.getElementById("yesCard").classList.remove("hidden");
-  startHearts();
-
-  const video = document.getElementById("loveVideo");
-
-  // give browser a tiny moment to render the video
-  setTimeout(() => {
-    video.muted = false;
-    video.play().catch(err => {
-      console.log("Autoplay blocked, user must press play", err);
-    });
-  }, 300);
-}
-
+      // Play video after small delay
+      setTimeout(() => {
+        video.play().catch(() => {
+          console.log("Autoplay blocked, user interaction needed");
+        });
+      }, 300);
+    }
 
     function moveNo() {
       const noBtn = document.getElementById("noBtn");
@@ -164,27 +205,40 @@ function sayYes() {
     function startHearts() {
       heartInterval = setInterval(() => {
         const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤️";
+        heart.className = "heart";
+        heart.innerText = "❤️";
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 15 + "px";
-
+        heart.style.fontSize = Math.random() * 15 + 18 + "px";
         document.body.appendChild(heart);
 
-        setTimeout(() => {
-          heart.remove();
-        }, 4000);
+        setTimeout(() => heart.remove(), 5000);
       }, 300);
+    }
+
+    const video = document.getElementById("loveVideo");
+
+    video.addEventListener("ended", () => {
+      const celebration = document.getElementById("celebration");
+      celebration.classList.add("show"); // fade-in overlay
+
+      // Add extra floating hearts + butterflies for celebration
+      for (let i = 0; i < 15; i++) {
+        createEmoji("❤️", "heart");
+        createEmoji("🦋", "butterfly");
+      }
+    });
+
+    function createEmoji(symbol, className) {
+      const el = document.createElement("div");
+      el.innerText = symbol;
+      el.className = className;
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDelay = Math.random() * 3 + "s";
+      document.body.appendChild(el);
+
+      setTimeout(() => el.remove(), 6000);
     }
   </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
