@@ -177,17 +177,35 @@
     let heartInterval;
 
     function sayYes() {
-      document.getElementById("questionCard").classList.add("hidden");
-      document.getElementById("yesCard").classList.remove("hidden");
-      startHearts();
+  document.getElementById("questionCard").classList.add("hidden");
+  document.getElementById("yesCard").classList.remove("hidden");
 
-      const video = document.getElementById("loveVideo");
-      setTimeout(() => {
-        video.play().catch(() => {
-          console.log("Autoplay blocked, user interaction needed");
-        });
-      }, 300);
-    }
+  const video = document.getElementById("loveVideo");
+
+  // Start video after short delay
+  setTimeout(() => {
+    video.play().catch(() => {
+      console.log("Autoplay blocked, user interaction needed");
+    });
+  }, 300);
+
+  // Start floating hearts during video
+  startHearts();
+}
+
+// Stop hearts and show celebration after video ends
+video.addEventListener("ended", () => {
+  clearInterval(heartInterval); // stop generating new hearts
+  // Remove all remaining hearts immediately
+  document.querySelectorAll(".heart").forEach(h => h.remove());
+
+  // Show celebration overlay
+  const celebration = document.getElementById("celebration");
+  celebration.classList.remove("hidden");
+
+  startCelebration(); // start butterfly and heart emojis for celebration
+});
+
 
     function moveNo() {
       const noBtn = document.getElementById("noBtn");
@@ -237,4 +255,5 @@
 
 </body>
 </html>
+
 
