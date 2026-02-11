@@ -78,16 +78,27 @@
       display: none;
     }
 
-    /* ❤️ Hearts floating */
+    /* ❤️ Hearts floating 
     .heart {
       position: fixed;
       bottom: 0;
       font-size: 22px;
       animation: floatUp 5s linear infinite;
       opacity: 0.8;
-      z-index: 1000; /* higher than the video */
+      z-index: 1000;
       pointer-events: none;
-    }
+    }   */
+
+    .heart {
+  position: absolute;  /* or fixed */
+  bottom: 0;
+  font-size: 20px;
+  animation: floatUp 4s linear infinite;
+  opacity: 0.8;
+  z-index: 1000;       /* high enough to float above video */
+  pointer-events: none;
+}
+
 
     @keyframes floatUp {
       from { transform: translateY(100vh); opacity: 1; }
@@ -206,20 +217,24 @@
       const y = Math.random() * 200 - 100;
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
     }
+    
 
     function startHearts() {
-      heartInterval = setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerText = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 15 + 18 + "px";
-        heart.style.animationDuration = (4 + Math.random() * 3) + 's';
-        document.body.appendChild(heart);
+  heartInterval = setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
 
-        setTimeout(() => heart.remove(), 5000);
-      }, 300);
-    }
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 4000);
+  }, 300);
+}
+
 
     const video = document.getElementById("loveVideo");
 
@@ -271,6 +286,7 @@ const butterflyInterval = setInterval(() => {
 
 </body>
 </html>
+
 
 
 
