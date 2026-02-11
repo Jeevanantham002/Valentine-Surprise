@@ -90,14 +90,15 @@
     }  */
 
    .heart {
-  position: fixed;  
+  position: fixed; /* fixed ensures it floats above all content */
   bottom: 0;
   font-size: 20px;
-  animation: floatUp 4s linear;
+  animation: floatUp 4s linear forwards; /* forwards instead of infinite */
   opacity: 0.8;
-  z-index: 1000;    /* high enough to appear above the card/video */
+  z-index: 9999; /* very high, above video */
   pointer-events: none;
 }
+
 
 
 
@@ -226,16 +227,21 @@
   heartInterval = setInterval(() => {
     const heart = document.createElement("div");
     heart.classList.add("heart");
-    heart.innerHTML = "❤️";
+    heart.innerText = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = Math.random() * 20 + 15 + "px";
 
-    document.body.appendChild(heart);
     console.log("Heart created! ❤️");
-    setTimeout(() => heart.remove(), 4000);
-    console.log("Heart removed! 🗑️");
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+      console.log("Heart removed! ");
+    }, 4000);
   }, 300);
 }
+
 
     const video = document.getElementById("loveVideo");
 
@@ -292,6 +298,7 @@ const butterflyInterval = setInterval(() => {
 
 </body>
 </html>
+
 
 
 
