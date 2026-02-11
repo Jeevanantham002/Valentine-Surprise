@@ -78,7 +78,7 @@
       display: none;
     }
 
-    /* ❤️ Hearts floating  */
+    /* ❤️ Hearts floating  
     .heart {
       position: absolute;
       bottom: 0;
@@ -87,7 +87,17 @@
       opacity: 0.8;
       z-index: 1000;
       pointer-events: none;
-    }  
+    }  */
+
+    .heart {
+  position: absolute;   /* absolute works fine */
+  bottom: 0;
+  font-size: 20px;
+  animation: floatUp 4s linear infinite;
+  opacity: 0.8;
+  z-index: 1;
+}
+
 
     
 
@@ -210,7 +220,7 @@
     }
     
 
-    function startHearts() {
+   function startHearts() {
   heartInterval = setInterval(() => {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -277,6 +287,7 @@ const butterflyInterval = setInterval(() => {
 
 </body>
 </html>
+
 
 
 
