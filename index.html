@@ -78,27 +78,18 @@
       display: none;
     }
 
-    /* ❤️ Hearts floating 
+    /* ❤️ Hearts floating  */
     .heart {
-      position: fixed;
+      position: absolute;
       bottom: 0;
       font-size: 22px;
       animation: floatUp 5s linear infinite;
       opacity: 0.8;
       z-index: 1000;
       pointer-events: none;
-    }   */
+    }  
 
-    .heart {
-  position: absolute;  /* or fixed */
-  bottom: 0;
-  font-size: 20px;
-  animation: floatUp 4s linear infinite;
-  opacity: 0.8;
-  z-index: 1000;       /* high enough to float above video */
-  pointer-events: none;
-}
-
+    
 
     @keyframes floatUp {
       from { transform: translateY(100vh); opacity: 1; }
@@ -286,6 +277,7 @@ const butterflyInterval = setInterval(() => {
 
 </body>
 </html>
+
 
 
 
