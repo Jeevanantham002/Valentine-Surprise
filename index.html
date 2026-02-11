@@ -262,9 +262,9 @@ const butterflyInterval = setInterval(() => {
   el.className = className;
 
   if (className === "butterfly") {
-    // Random positions for the flutter animation
+    // same butterfly code
     el.style.setProperty('--start-x', Math.random() * 100 + 'vw');
-    el.style.setProperty('--start-y', 100 + 'vh'); // start from bottom
+    el.style.setProperty('--start-y', 100 + 'vh'); 
     el.style.setProperty('--mid1-x', Math.random() * 100 + 'vw');
     el.style.setProperty('--mid1-y', Math.random() * 80 + 'vh');
     el.style.setProperty('--mid2-x', Math.random() * 100 + 'vw');
@@ -272,21 +272,27 @@ const butterflyInterval = setInterval(() => {
     el.style.setProperty('--mid3-x', Math.random() * 100 + 'vw');
     el.style.setProperty('--mid3-y', Math.random() * 80 + 'vh');
     el.style.setProperty('--end-x', Math.random() * 100 + 'vw');
-    el.style.setProperty('--end-y', -10 + 'vh'); // end above the screen
-
-    // Random animation duration for each butterfly
+    el.style.setProperty('--end-y', -10 + 'vh');
     el.style.animationDuration = (4 + Math.random() * 3) + 's';
+  } else if (className === "heart") {
+    el.style.position = 'absolute';
+    el.style.bottom = '0';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.fontSize = Math.random() * 20 + 15 + 'px';
+    el.style.animation = 'floatUp 4s linear';
   }
 
   document.body.appendChild(el);
 
-  setTimeout(() => el.remove(), 6000);
+  setTimeout(() => el.remove(), 4000); // remove after animation
 }
+
 
   </script>
 
 </body>
 </html>
+
 
 
 
