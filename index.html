@@ -214,6 +214,7 @@
         heart.innerText = "❤️";
         heart.style.left = Math.random() * 100 + "vw";
         heart.style.fontSize = Math.random() * 15 + 18 + "px";
+        heart.style.animationDuration = (4 + Math.random() * 3) + 's';
         document.body.appendChild(heart);
 
         setTimeout(() => heart.remove(), 5000);
@@ -270,6 +271,7 @@ const butterflyInterval = setInterval(() => {
 
 </body>
 </html>
+
 
 
 
